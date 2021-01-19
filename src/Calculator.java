@@ -12,7 +12,7 @@ public class Calculator implements ActionListener {
     Font font;
     JPanel buttons;
     GridBagConstraints gbc;
-    double num1=0, num2=0;
+    float num1=0, num2=0;
     char operator = ' ';
 
     Calculator(){
@@ -32,7 +32,7 @@ public class Calculator implements ActionListener {
         results.setPreferredSize(new Dimension(300, 90));
         results.setFont(font);
         results.setBackground(Color.LIGHT_GRAY);
-        results.setBorder(BorderFactory.createEmptyBorder(0 ,8, 0, 0));
+        results.setBorder(BorderFactory.createEmptyBorder(0 ,5, 0, 0));
         results.setEditable(false);
 
         /* buttons */
@@ -178,28 +178,28 @@ public class Calculator implements ActionListener {
         if(getResults().length() > 0){
             /* (+) */
             if(e.getSource() == funcButtons[0]){
-                num1 = Double.parseDouble(getResults());
+                num1 = Float.parseFloat(getResults());
                 operator = '+';
                 setResults("");
             }
 
             /* (-) */
             if(e.getSource() == funcButtons[1]){
-                num1 = Double.parseDouble(getResults());
+                num1 = Float.parseFloat(getResults());
                 operator = '-';
                 setResults("");
             }
 
             /* (*) */
             if(e.getSource() == funcButtons[2]){
-                num1 = Double.parseDouble(getResults());
+                num1 = Float.parseFloat(getResults());
                 operator = '*';
                 setResults("");
             }
 
             /* (/) */
             if(e.getSource() == funcButtons[3]){
-                num1 = Double.parseDouble(getResults());
+                num1 = Float.parseFloat(getResults());
                 operator = '/';
                 setResults("");
             }
@@ -208,7 +208,7 @@ public class Calculator implements ActionListener {
             if(operator != ' '){
                 if(e.getSource() == funcButtons[5]){
 
-                    num2 = Double.parseDouble(getResults());
+                    num2 = Float.parseFloat(getResults());
                     boolean divByZero = false;
                     switch(operator){
                         case '+':
@@ -240,8 +240,12 @@ public class Calculator implements ActionListener {
                                 funcButtons[i].setEnabled(false);
                         }
                     }
-                    else
-                        setResults(String.valueOf(num2));
+                    else{
+                        if (num2 % 1 != 0) //checks if num2 is decimal
+                            setResults(String.valueOf(num2));
+                        else
+                            setResults(String.valueOf((int)num2));
+                    }
 
                 }
             }
