@@ -208,6 +208,7 @@ public class Calculator implements ActionListener {
             if(operator != ' '){
                 if(e.getSource() == funcButtons[5]){
                     num2 = Double.parseDouble(getResults());
+                    boolean divByZero = false;
                     switch(operator){
                         case '+':
                             num2 = num1 + num2;
@@ -222,11 +223,25 @@ public class Calculator implements ActionListener {
                             operator = ' ';
                             break;
                         case '/':
+                            if (num2 == 0)
+                                divByZero = true;
                             num2 = num1 / num2;
                             operator = ' ';
                             break;
                     }
-                    setResults(String.valueOf(num2));
+
+                    if(divByZero){
+                        setResults("Cannot divide by zero");
+                        for(int i=0; i<10; i++){
+                            numButtons[i].setEnabled(false);
+                            //sets all the buttons enabled except C (Clear)
+                            if (i<7)
+                                funcButtons[i].setEnabled(false);
+                        }
+                    }
+                    else
+                        setResults(String.valueOf(num2));
+
                 }
             }
 
@@ -240,8 +255,15 @@ public class Calculator implements ActionListener {
         }
 
         /* (C) function */
-        if(e.getSource() == funcButtons[7])
+        if(e.getSource() == funcButtons[7]){
             setResults("");
+            for(int i=0; i<10; i++){
+                numButtons[i].setEnabled(true);
+                if (i<8)
+                    funcButtons[i].setEnabled(true);
+            }
+        }
+
     }
 
     public static void main(String[] args){
