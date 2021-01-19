@@ -15,7 +15,7 @@ public class Calculator implements ActionListener{
     Font font;
     JPanel buttons;
     GridBagConstraints gbc;
-    double num1=0, num2=0;
+    float num1=0, num2=0;
     char operator = ' ';
 
     Calculator(){
