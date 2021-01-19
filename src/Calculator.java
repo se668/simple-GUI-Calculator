@@ -1,8 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
-public class Calculator implements ActionListener {
+public class Calculator implements ActionListener{
 
     JFrame frame;
     ImageIcon logo;
@@ -12,7 +15,7 @@ public class Calculator implements ActionListener {
     Font font;
     JPanel buttons;
     GridBagConstraints gbc;
-    float num1=0, num2=0;
+    double num1=0, num2=0;
     char operator = ' ';
 
     Calculator(){
@@ -256,10 +259,10 @@ public class Calculator implements ActionListener {
                        }
                 }
                 else{
-                    if (num2 % 1 != 0) //checks if num2 is decimal
-                        setResults(String.valueOf(num2));
-                    else
-                        setResults(String.valueOf((int)num2));
+                    NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+                    DecimalFormat formatter = (DecimalFormat) nf;
+                    formatter.setMaximumFractionDigits(5);
+                    setResults(nf.format(num2));
                 }
 
             }
@@ -288,4 +291,5 @@ public class Calculator implements ActionListener {
     public static void main(String[] args){
         new Calculator();
     }
+
 }
