@@ -210,25 +210,25 @@ public class Calculator implements ActionListener {
 
                     num2 = Float.parseFloat(getResults());
                     boolean divByZero = false;
-                    switch(operator){
-                        case '+':
+                    switch (operator) {
+                        case '+' -> {
                             num2 = num1 + num2;
                             operator = ' ';
-                            break;
-                        case '-':
+                        }
+                        case '-' -> {
                             num2 = num1 - num2;
                             operator = ' ';
-                            break;
-                        case '*':
+                        }
+                        case '*' -> {
                             num2 = num1 * num2;
                             operator = ' ';
-                            break;
-                        case '/':
+                        }
+                        case '/' -> {
                             if (num2 == 0)
                                 divByZero = true;
                             num2 = num1 / num2;
                             operator = ' ';
-                            break;
+                        }
                     }
 
                     if(divByZero){
