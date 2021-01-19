@@ -181,6 +181,9 @@ public class Calculator implements ActionListener {
                 num1 = Float.parseFloat(getResults());
                 operator = '+';
                 setResults("");
+                for(int i=0; i<4; i++){
+                    funcButtons[i].setEnabled(false);
+                }
             }
 
             /* (-) */
@@ -188,6 +191,9 @@ public class Calculator implements ActionListener {
                 num1 = Float.parseFloat(getResults());
                 operator = '-';
                 setResults("");
+                for(int i=0; i<4; i++){
+                    funcButtons[i].setEnabled(false);
+                }
             }
 
             /* (*) */
@@ -195,6 +201,9 @@ public class Calculator implements ActionListener {
                 num1 = Float.parseFloat(getResults());
                 operator = '*';
                 setResults("");
+                for(int i=0; i<4; i++){
+                    funcButtons[i].setEnabled(false);
+                }
             }
 
             /* (/) */
@@ -202,52 +211,57 @@ public class Calculator implements ActionListener {
                 num1 = Float.parseFloat(getResults());
                 operator = '/';
                 setResults("");
+                for(int i=0; i<4; i++){
+                    funcButtons[i].setEnabled(false);
+                }
             }
 
             /* (=) */
-            if(operator != ' '){
-                if(e.getSource() == funcButtons[5]){
+            if(e.getSource() == funcButtons[5] && operator != ' '){
 
-                    num2 = Float.parseFloat(getResults());
-                    boolean divByZero = false;
-                    switch (operator) {
-                        case '+' -> {
-                            num2 = num1 + num2;
-                            operator = ' ';
-                        }
-                        case '-' -> {
-                            num2 = num1 - num2;
-                            operator = ' ';
-                        }
-                        case '*' -> {
-                            num2 = num1 * num2;
-                            operator = ' ';
-                        }
-                        case '/' -> {
-                            if (num2 == 0)
-                                divByZero = true;
-                            num2 = num1 / num2;
-                            operator = ' ';
-                        }
+                num2 = Float.parseFloat(getResults());
+                boolean divByZero = false;
+                switch (operator) {
+                    case '+' -> {
+                        num2 = num1 + num2;
+                        operator = ' ';
                     }
-
-                    if(divByZero){
-                        setResults("Cannot divide by zero");
-                        for(int i=0; i<10; i++){
-                            numButtons[i].setEnabled(false);
-                            //sets all the buttons enabled except C (Clear)
-                            if (i<7)
-                                funcButtons[i].setEnabled(false);
-                        }
+                    case '-' -> {
+                        num2 = num1 - num2;
+                        operator = ' ';
                     }
-                    else{
-                        if (num2 % 1 != 0) //checks if num2 is decimal
-                            setResults(String.valueOf(num2));
-                        else
-                            setResults(String.valueOf((int)num2));
+                    case '*' -> {
+                        num2 = num1 * num2;
+                        operator = ' ';
                     }
-
+                    case '/' -> {
+                        if (num2 == 0)
+                            divByZero = true;
+                        num2 = num1 / num2;
+                        operator = ' ';
+                    }
                 }
+
+                for(int i=0; i<4; i++){
+                    funcButtons[i].setEnabled(true);
+                }
+
+                if(divByZero){
+                    setResults("Cannot divide by zero");
+                       for(int i=0; i<10; i++){
+                           numButtons[i].setEnabled(false);
+                           //sets all the buttons enabled except C (Clear)
+                           if (i<7)
+                               funcButtons[i].setEnabled(false);
+                       }
+                }
+                else{
+                    if (num2 % 1 != 0) //checks if num2 is decimal
+                        setResults(String.valueOf(num2));
+                    else
+                        setResults(String.valueOf((int)num2));
+                }
+
             }
 
             /* (.) */
