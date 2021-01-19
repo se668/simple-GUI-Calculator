@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 public class Calculator implements ActionListener{
 
@@ -11,10 +8,9 @@ public class Calculator implements ActionListener{
     ImageIcon logo;
     JTextField results;
     JButton [] numButtons = new JButton[10];
-    JButton [] funcButtons = new JButton[8];
+    JButton [] funcButtons = new JButton[10];
     Font font;
     JPanel buttons;
-    GridBagConstraints gbc;
     float num1=0, num2=0;
     char operator = ' ';
 
@@ -56,8 +52,10 @@ public class Calculator implements ActionListener{
         funcButtons[5] = new JButton("=");
         funcButtons[6] = new JButton("<-");
         funcButtons[7] = new JButton("C");
+        funcButtons[8] = new JButton("(-)");
+        funcButtons[9] = new JButton("\u221A"); //Square Root
 
-        for(int i=0; i<8; i++){
+        for(int i=0; i<10; i++){
             funcButtons[i].setFont(font);
             funcButtons[i].setFocusable(false);
             funcButtons[i].setPreferredSize(new Dimension(75, 70));
@@ -65,93 +63,33 @@ public class Calculator implements ActionListener{
             funcButtons[i].addActionListener(this);
         }
 
-        /* panel with buttons */
-        buttons = new JPanel(new GridBagLayout());
-        gbc = new GridBagConstraints();
+        /* adds the buttons to the panel */
+        buttons = new JPanel(new GridLayout(5, 4));
 
-        /* 1) Row */
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        buttons.add(funcButtons[7], gbc);
+        buttons.add(funcButtons[7]);
+        buttons.add(funcButtons[6]);
+        buttons.add(funcButtons[9]);
+        buttons.add(funcButtons[3]);
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        buttons.add(funcButtons[6], gbc);
+        buttons.add(numButtons[7]);
+        buttons.add(numButtons[8]);
+        buttons.add(numButtons[9]);
+        buttons.add(funcButtons[2]);
 
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        buttons.add(funcButtons[3], gbc);
+        buttons.add(numButtons[4]);
+        buttons.add(numButtons[5]);
+        buttons.add(numButtons[6]);
+        buttons.add(funcButtons[1]);
 
-        gbc.gridx = 3;
-        gbc.gridy = 0;
-        buttons.add(funcButtons[2], gbc);
+        buttons.add(numButtons[1]);
+        buttons.add(numButtons[2]);
+        buttons.add(numButtons[3]);
+        buttons.add(funcButtons[0]);
 
-        /* 2) Row */
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        buttons.add(numButtons[7], gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        buttons.add(numButtons[8], gbc);
-
-        gbc.gridx = 2;
-        gbc.gridy = 1;
-        buttons.add(numButtons[9], gbc);
-
-        gbc.gridx = 3;
-        gbc.gridy = 1;
-        buttons.add(funcButtons[1], gbc);
-
-        /* 3) Row */
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        buttons.add(numButtons[4], gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        buttons.add(numButtons[5], gbc);
-
-        gbc.gridx = 2;
-        gbc.gridy = 2;
-        buttons.add(numButtons[6], gbc);
-
-        gbc.gridx = 3;
-        gbc.gridy = 2;
-        buttons.add(funcButtons[0], gbc);
-
-        /* 4) Row */
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        buttons.add(numButtons[1], gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        buttons.add(numButtons[2], gbc);
-
-        gbc.gridx = 2;
-        gbc.gridy = 3;
-        buttons.add(numButtons[3], gbc);
-
-        gbc.gridx = 3;
-        gbc.gridy = 3;
-        gbc.gridheight=2;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        buttons.add(funcButtons[5], gbc);
-
-        /* 5) Row */
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth=2;
-        gbc.gridheight=1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        buttons.add(numButtons[0], gbc);
-
-        gbc.gridx = 2;
-        gbc.gridy = 4;
-        gbc.gridwidth=1;
-        gbc.gridheight=1;
-        buttons.add(funcButtons[4], gbc);
+        buttons.add(funcButtons[8]);
+        buttons.add(numButtons[0]);
+        buttons.add(funcButtons[4]);
+        buttons.add(funcButtons[5]);
 
         /* adds the components to the frame */
         frame.add(results, BorderLayout.NORTH);
@@ -179,6 +117,7 @@ public class Calculator implements ActionListener{
 
         /* functions */
         if(getResults().length() > 0){
+
             /* (+) */
             if(e.getSource() == funcButtons[0]){
                 num1 = Float.parseFloat(getResults());
@@ -254,15 +193,16 @@ public class Calculator implements ActionListener{
                        for(int i=0; i<10; i++){
                            numButtons[i].setEnabled(false);
                            //sets all the buttons enabled except C (Clear)
-                           if (i<7)
+                           if(i!=7){
                                funcButtons[i].setEnabled(false);
+                           }
                        }
                 }
                 else{
-                    NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-                    DecimalFormat formatter = (DecimalFormat) nf;
-                    formatter.setMaximumFractionDigits(5);
-                    setResults(nf.format(num2));
+                    if(num2 % 1 != 0)
+                        setResults(String.valueOf(num2));
+                    else
+                        setResults(String.valueOf((int)num2));
                 }
 
             }
@@ -274,15 +214,47 @@ public class Calculator implements ActionListener{
             /* (<-) */
             if(e.getSource() == funcButtons[6])
                 setResults(getResults().substring(0, getResults().length() - 1));
+
+            /* ((-)) */
+            if(e.getSource() == funcButtons[8]){
+                float temp = Float.parseFloat(getResults());
+                temp*=-1;
+                if(temp % 1 != 0)
+                    setResults(String.valueOf(temp));
+                else
+                    setResults(String.valueOf((int)temp));
+            }
+
+            /* (Square Root) */
+            if(e.getSource() == funcButtons[9]){
+                float temp = Float.parseFloat(getResults());
+                if(temp<0){
+                    setResults("Invalid input");
+                    for(int i=0; i<10; i++){
+                        numButtons[i].setEnabled(false);
+                        //sets all the buttons enabled except C (Clear)
+                        if(i!=7){
+                            funcButtons[i].setEnabled(false);
+                        }
+                    }
+                }
+                else{
+                    temp = (float) Math.sqrt(temp);
+                    if(temp % 1 != 0)
+                        setResults(String.valueOf(temp));
+                    else
+                        setResults(String.valueOf((int)temp));
+                }
+            }
+
         }
 
-        /* (C) function */
+        /* (C) */
         if(e.getSource() == funcButtons[7]){
             setResults("");
             for(int i=0; i<10; i++){
                 numButtons[i].setEnabled(true);
-                if (i<8)
-                    funcButtons[i].setEnabled(true);
+                funcButtons[i].setEnabled(true);
             }
         }
 
