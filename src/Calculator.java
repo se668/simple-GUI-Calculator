@@ -46,14 +46,14 @@ public class Calculator implements ActionListener{
 
         funcButtons[0] = new JButton("+");
         funcButtons[1] = new JButton("-");
-        funcButtons[2] = new JButton("*");
-        funcButtons[3] = new JButton("/");
+        funcButtons[2] = new JButton("x");
+        funcButtons[3] = new JButton("\u00F7"); // division (/)
         funcButtons[4] = new JButton(".");
         funcButtons[5] = new JButton("=");
-        funcButtons[6] = new JButton("<-");
+        funcButtons[6] = new JButton("\u2190"); // delete
         funcButtons[7] = new JButton("C");
-        funcButtons[8] = new JButton("(-)");
-        funcButtons[9] = new JButton("\u221A"); //Square Root
+        funcButtons[8] = new JButton("+/-");
+        funcButtons[9] = new JButton("\u221A"); //square root
 
         for(int i=0; i<10; i++){
             funcButtons[i].setFont(font);
@@ -138,7 +138,7 @@ public class Calculator implements ActionListener{
                 }
             }
 
-            /* (*) */
+            /* (x) */
             if(e.getSource() == funcButtons[2]){
                 num1 = Float.parseFloat(getResults());
                 operator = '*';
@@ -148,7 +148,7 @@ public class Calculator implements ActionListener{
                 }
             }
 
-            /* (/) */
+            /* (division (/) ) */
             if(e.getSource() == funcButtons[3]){
                 num1 = Float.parseFloat(getResults());
                 operator = '/';
@@ -193,9 +193,8 @@ public class Calculator implements ActionListener{
                        for(int i=0; i<10; i++){
                            numButtons[i].setEnabled(false);
                            //sets all the buttons enabled except C (Clear)
-                           if(i!=7){
+                           if(i!=7)
                                funcButtons[i].setEnabled(false);
-                           }
                        }
                 }
                 else{
@@ -211,11 +210,11 @@ public class Calculator implements ActionListener{
             if(e.getSource() == funcButtons[4] && !getResults().contains("."))
                 setResults(getResults() + '.');
 
-            /* (<-) */
+            /* (delete) */
             if(e.getSource() == funcButtons[6])
                 setResults(getResults().substring(0, getResults().length() - 1));
 
-            /* ((-)) */
+            /* (+/-) */
             if(e.getSource() == funcButtons[8]){
                 float temp = Float.parseFloat(getResults());
                 temp*=-1;
@@ -225,7 +224,7 @@ public class Calculator implements ActionListener{
                     setResults(String.valueOf((int)temp));
             }
 
-            /* (Square Root) */
+            /* (square root) */
             if(e.getSource() == funcButtons[9]){
                 float temp = Float.parseFloat(getResults());
                 if(temp<0){
@@ -233,9 +232,8 @@ public class Calculator implements ActionListener{
                     for(int i=0; i<10; i++){
                         numButtons[i].setEnabled(false);
                         //sets all the buttons enabled except C (Clear)
-                        if(i!=7){
+                        if(i!=7)
                             funcButtons[i].setEnabled(false);
-                        }
                     }
                 }
                 else{
