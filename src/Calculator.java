@@ -24,13 +24,14 @@ public class Calculator implements ActionListener{
         frame.setLayout(new BorderLayout());
         frame.setIconImage(logo.getImage());
 
-        font = new Font("Arial", Font.PLAIN, 30);
+        font = new Font("Segoe UI", Font.PLAIN, 30);
 
         /* results */
         results = new JTextField();
         results.setPreferredSize(new Dimension(300, 90));
         results.setFont(font);
-        results.setBackground(Color.LIGHT_GRAY);
+        results.setBackground(new Color(3,3,3));
+        results.setForeground(Color.WHITE);
         results.setBorder(BorderFactory.createEmptyBorder(0 ,5, 0, 0));
         results.setEditable(false);
 
@@ -41,6 +42,9 @@ public class Calculator implements ActionListener{
             numButtons[i].setFocusable(false);
             numButtons[i].setPreferredSize(new Dimension(75, 70));
             numButtons[i].setMinimumSize(new Dimension(75, 70));
+            numButtons[i].setBorder(null);
+            numButtons[i].setBackground(new Color(5, 5, 5));
+            numButtons[i].setForeground(Color.WHITE);
             numButtons[i].addActionListener(this);
         }
 
@@ -60,6 +64,9 @@ public class Calculator implements ActionListener{
             funcButtons[i].setFocusable(false);
             funcButtons[i].setPreferredSize(new Dimension(75, 70));
             funcButtons[i].setMinimumSize(new Dimension(75, 70));
+            funcButtons[i].setBorder(null);
+            funcButtons[i].setBackground(Color.BLACK);
+            funcButtons[i].setForeground(new Color(49, 151, 145));
             funcButtons[i].addActionListener(this);
         }
 
